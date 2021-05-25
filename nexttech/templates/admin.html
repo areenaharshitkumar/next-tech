@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+{% extends 'index.html'%}
+{% block body_block %}
+    <style>
+        .shadow-custom {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .25), 0 3px 10px 5px rgba(0, 0, 0, 0.05) !important;
+}
+    </style>
+    <div class="container-fluid">
+        <center><h4><b>Hello Admin {{request.user.username}}</b></h4></center>
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-2" >
+                  <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active btn-block btn" id="v-pills-home-tab" data-mdb-toggle="pill" href="#v-pills-home"
+                      role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-home" aria-hidden="true"></i> &nbsp;&nbsp; Home</a>
+                    <a class="nav-link btn-block btn" id="v-pills-profile-tab" data-mdb-toggle="pill" href="#v-pills-profile"
+                      role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp; Add Apps</a>
+                    <a class="nav-link btn-block btn" href="{% url 'logout_admin' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp; Logout</a>
+                  </div>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-9" style="background-color: white;">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            <br/>
+                            {% for ad in app_detail %}
+                            <div class="card" style="background-color: azure;">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <img id='app_picture' src="{{ad.app_pic.url}}" alt="{{ad.app_pic}}" class="img-fluid" />
+                                            </div>
+                                            <div class="col-sm-6" style="margin-top: 40px;">
+                                                <h3>{{ad.app_name}}</h3>
+                                                <p style="color: blue;">
+                                                    <a href="" class="btn-block" data-mdb-toggle="modal" data-mdb-target="#appdetail{{ad.id}}" data-mdb-dismiss="modal" > <u> View in Detail > </u></a>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-3 text-center" style="margin-top: 0px;">
+                                                {% if ad.assigned_app %}
+                                                    <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#taskassign{{ad.id}}" data-mdb-dismiss="modal" disabled>Assign Task</button>
+                                                {% else %}
+                                                    <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#taskassign{{ad.id}}" data-mdb-dismiss="modal">Assign Task</button>
+                                                {% endif %}
+                                                <br>
+                                                <button class="btn btn-link" data-mdb-toggle="tooltip" title="Delete this app detail" data-mdb-toggle="modal" data-mdb-target="#appdelete{{ad.id}}" data-mdb-dismiss="modal"></button>
+                                                <a href="" class="btn-block" data-mdb-toggle="modal" data-mdb-target="#appdelete{{ad.id}}" data-mdb-dismiss="modal" ><h2><i class="fa fa-trash-o" aria-hidden="true"></i></h2></a>
+
+                                                <br/>
+                                                <button class="btn btn-light ">{{ad.app_points}} POINTS</button>
+                                            </div>
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                            <br/>
+                            <!-- App Detail Model with all Details -->
+                            <div class="modal fade" id="appdetail{{ad.id}}" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">App Detail</h5>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card" style="background-color: azure;">
+                                                <div class="card-body">
+                                                    <p class="card-text">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <img id='app_picture' src="{{ad.app_pic.url}}" alt="{{ad.app_pic}}" class="img-fluid" />
+                                                            </div>
+                                                            <div class="col-sm-6" style="margin-top: 40px;">
+                                                                <h3>{{ad.app_name}}</h3>
+                                                                <p style="color: blue;">
+                                                                    <a href="{{ad.app_url}}"  target="_blank" > <u> {{ad.app_url}} </u></a>
+                                                                    <!-- <a href="{{ad.app_url}}" target="_blank"> <u> {{ad.app_url}} </u></a> -->
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-sm-3 text-center" style="padding-top: 0px;">
+                                                                {% if ad.assigned_app %}
+                                                                    <button class="btn btn-light ">{{ad.assigned_user}}</button>
+                                                                {% endif %}
+                                                                
+                                                                <br>
+                                                                <br>
+                                                                {%if ad.app_status %}
+                                                                    <button class="btn btn-light ">Task completed</button>
+                                                                {% else %}
+                                                                    <button class="btn btn-light ">Task Not Complete</button>
+                                                                {% endif %}
+                                                                <br>
+                                                                <br>
+                                                                <button class="btn btn-light ">{{ad.app_points}} POINTS</button>
+                                                            </div>
+                                                        </div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End App Detail Modal with all Details -->
+
+                            <!-- App Delete Modal -->
+                            <div class="modal fade" id="appdelete{{ad.id}}" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Alert !!</h5>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Do you want delete this app detail ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" class="form-control" name="hidden" id="hidden{{ad.id}}" value="{{ad.id}}">
+                                                <input type="submit" class="btn btn-primary btn-block" value="Yes">
+
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="taskassign{{ad.id}}" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Assign task to User</h5>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <select class="form-control" name="taskassign" id="taskassign" placeholder="App Category">
+                                                    {% for u in user%}
+                                                        <option value="{{ad.id}}_{{u.email}}">{{u.user_username}}</option>
+                                                    {%endfor%}
+                                                </select>
+                                                <br>
+                                                <input type="hidden" class="form-control" name="hidden" id="htaskassign{{ad.id}}" value="taskassign">
+                                                <input type="submit" class="btn btn-primary" value="Ok">
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <br/>
+                        <form action="" method="post" enctype="multipart/form-data"> 
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="file" class="form-control" name="apppicture" id="apppicture" placeholder="App Name" ondrop="changeimg()">
+                                </div>
+                                <!-- <script>
+                                    function changeimg(){
+                                        document.getElementById('app_picture').src = document.getElementById('apppicture').value;
+                                    }
+                                </script> -->
+                                <div class="col-sm-6">
+                                    <!-- <div class="card  ">
+                                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                          <img id='app_picture' src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.jpg" class="img-fluid" />
+                                          <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                          </a>
+                                        </div>
+                                      </div> -->
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="appname" id="appname" placeholder="App Name">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="applink" id="applink" placeholder="App link">
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="appcategory" id="appcategory" placeholder="App Category">
+                                        <option value="">----------Select Category----------</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Beauty">Beauty</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Communication">Communication</option>
+                                        <option value="Medical">Medical</option>
+                                        <option value="Medical">Other</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="subcategory" id="subcategory" placeholder="App Sub Category">
+                                        <option value="">----------Select Sub Category----------</option>
+                                        <option value="Art & Design">Art & Design</option>
+                                        <option value="Auto & Vehicles">Auto & Vehicles</option>
+                                        <option value="Beauty">Beauty</option>
+                                        <option value="Books & Reference">Books & Reference</option>
+                                        <option value="Comics">Comics</option>
+                                        <option value="Communication">Communication</option>
+                                        <option value="Dating">Dating</option>
+                                        <option value="Events">Events</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Food & Drink">Food & Drink</option>
+                                        <option value="Health & Fitness">Health & Fitness</option>
+                                        <option value="">House & Home</option>
+                                        <option value="House & Home">Libraries & Demo</option>
+                                        <option value="Lifestyle">Lifestyle</option>
+                                        <option value="Maps & Navigation">Maps & Navigation</option>
+                                        <option value="Music & Audio">Music & Audio</option>
+                                        <option value="News & Magazines">News & Magazines</option>
+                                        <option value="Parenting">Parenting</option>
+                                        <option value="Personalization">Personalization</option>
+                                        <option value="Photography">Photography</option>
+                                        <option value="Productivity">Productivity</option>
+                                        <option value="Shopping">Shopping</option>
+                                        <option value="Social">Social</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Tools">Tools</option>
+                                        <option value="Travel & Local">Travel & Local</option>
+                                        <option value="Video Players & Editors">Video Players & Editors</option>
+                                        <option value="Weather">Weather</option>
+                                        <option value="Action">Action</option>
+                                        <option value="Adventure">Adventure</option>
+                                        <option value="Arcade">Arcade</option>
+                                        <option value="Board">Board</option>
+                                        <option value="Card">Card</option>
+                                        <option value="Casino">Casino</option>
+                                        <option value="Casual">Casual</option>
+                                        <option value="Music">Music</option>
+                                        <option value="Puzzle">Puzzle</option>
+                                        <option value="Racing">Racing</option>
+                                        <option value="Role Playing">Role Playing</option>
+                                        <option value="Simulation">Simulation</option>
+                                        <option value="Sports Games">Sports Games</option>
+                                        <option value="Strategy">Strategy</option>
+                                        <option value="Trivia">Trivia</option>
+                                        <option value="Word">Word</option>  
+                                        <option value="Medical">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="number" class="form-control" name="apppoints" id="apppoints" placeholder="Points">
+                                    <input type="hidden" class="form-control" name="hidden" id="hidden" value="app_detail">
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-6">
+                                    <input type="submit" class="btn btn-light btn-block" value="Submit">
+                                </div>
+                                <div class="col-sm-3"></div>
+                            </div>
+                        </form>
+                        <br/>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    
+{% endblock %}

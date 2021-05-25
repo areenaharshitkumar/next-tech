@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css\style.css" %}">
+    <link rel="stylesheet" href="{% static "mbd\css\mdb.min.css" %}">
+    <script src="{% static "mbd\js\mdb.min.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static "mbd\js\mdb.min.js" %}"></script>
+    <!-- <script src="{% static "mbd\src\js\free\modal.js" %}"></script>
+    <script src="{% static "mbd\src\js\free\tooltip.js" %}"></script>
+    <script src="{% static "mbd\src\js\free\button.js" %}"></script>
+    <script src="{% static "mbd\src\js\free\dropdown.js" %}"></script>
+    <script src="{% static "mbd\src\js\free\input.js" %}"></script>
+    <script src="{% static "mbd\src\js\free\alert.js" %}"></script> -->
+</head>
+<body>
+    {% block body_block %}
+    <div class="container">
+        <div class="jumbotron" style="margin-top: 120px;">
+            <center><h2>Welcome to Next Technology</h2></center>
+            <br />
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-light btn-block" data-mdb-toggle="modal" data-mdb-target="#admin" data-mdb-dismiss="modal" onclick="">Admin Login</button>
+                </div>
+            </div>
+            <div class="modal fade" id="admin" data-mdb-backdrop="static" data-mdb-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Admin Login</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <p>
+                                    <label>User Name</label>
+                                    <input type="text" class="form-control" name="username" id="username1" required>
+                                </p>
+                                <p>
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" name="password" id="password1" required>
+                                </p>
+                                <input type="hidden" class="form-control" name="hidden" id="hidden1" value="adminlogin">
+                                <input type="submit" class="btn btn-primary" value="Login"></button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-block" data-mdb-toggle="modal" data-mdb-target="#admindetail" data-mdb-dismiss="modal" onclick="">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <!--Admin Detail Model  -->
+            <div class="modal fade" id="admindetail" data-mdb-backdrop="static" data-mdb-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Admin SignUp</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <p>
+                                    <label>User Name</label>
+                                    <input type="text" class="form-control" name="username" id="username2" required>
+                                </p>
+                                <p>
+                                    <label>Full Name</label>
+                                    <input type="text" class="form-control" name="fullname" id="fullname2" required>
+                                </p>
+                                <p>
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" name="password" id="password2" required>
+                                </p>
+                                <input type="hidden" class="form-control" name="hidden" id="hidden2" value="admindetail">
+                                <input type="submit" class="btn btn-primary" value="Submit"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <!-- End Admin Detail Model -->
+
+            <br />
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-light btn-block" data-mdb-toggle="modal" data-mdb-target="#userlogin" data-mdb-dismiss="modal" onclick="">User Login</button>
+                </div>
+            </div>
+            <div class="modal fade" id="userlogin" data-mdb-backdrop="static" data-mdb-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">User Login</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                            {% csrf_token %}
+                                <p>
+                                    <label>User Name</label>
+                                    <input type="text" class="form-control" name="username" id="username" required>
+                                </p>
+                                <p>
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" name="password" id="password" required>
+                                </p>
+                                <input type="hidden" class="form-control" name="hidden" id="hidden" value="userlogin">
+                                <input type="submit" class="btn btn-primary" value="Login"></button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-block" data-mdb-toggle="modal" data-mdb-target="#userdetail" data-mdb-dismiss="modal" onclick="">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <!--Admin User Model  -->
+            <div class="modal fade" id="userdetail" data-mdb-backdrop="static" data-mdb-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">User SignUp</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <label>User Name</label>
+                                            <input type="text" class="form-control" name="username" id="username4" required>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <label>Full Name</label>
+                                            <input type="text" class="form-control" name="fullname" id="fullname4" required>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" required>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <label>Mobile No.</label>
+                                            <input type="text" class="form-control" name="mobile" id="mobile" required>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <label>Address</label>
+                                            <input type="text" class="form-control" name="address" id="address" required>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <label>Password</label> 
+                                            <input type="password" class="form-control" name="password" id="password" required>
+                                        </p>
+                                    </div>
+                                </div>
+                                <input type="hidden" class="form-control" name="hidden" id="hidden4" value="userdetail">
+                                <input type="submit" class="btn btn-primary" value="Submit"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <!-- End User Detail Model -->
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
